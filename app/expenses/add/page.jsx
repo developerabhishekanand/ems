@@ -1,0 +1,133 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { addExpense } from "../../utils/api";
+import Link from "next/link";
+
+
+export const AddExpense= () => {
+  const [ form, setForm] = useState(
+    { 
+      title: '',
+      amount: '',
+      date: '', // YYYY-MM-DD (populate on client mount to avoid SSR/client mismatch)
+      category: '' 
+
+    });
+
+  // populate date on client mount to avoid rendering different values between
+  // server and client initial render (prevents hydration mismatches)
+  useEffect(() => {
+    // Defer setState to avoid a synchronous state update within the effect
+    const id = setTimeout(() => {
+      setForm((prev) => ({ ...prev, date: new Date().toISOString().split('T')[0] }));
+    }, 0);
+
+    return () => clearTimeout(id);
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prevForm) => ({
+      ...prevForm,
+      [name]: value,
+    }));
+  }
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        alert("Please login first!");
+        return;
+      } 
+
+       
+    const res = await addExpense({
+      title: form.title,
+      amount: form.amount,
+      category: form.category || "General",
+      date: form.date,
+    });
+
+    if (res && res.status >= 200 && res.status < 300) {
+      alert("Expense added successfully!");
+      setForm({
+        title: '',
+        amount: '',
+        date: new Date().toISOString().split('T')[0],
+        category: ''
+      });
+    } else {
+      console.error('Add expense failed:', res);
+      alert(res?.message || 'Failed to add expense');
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+    alert('An error occurred while adding expense');
+  }
+    // window.location.href = "/expenses"; // navigate to list
+  };
+
+  return (
+    <div style={{ maxWidth: 420, margin: "40px auto", padding: 20 }}>
+      <h1>Add Expense</h1>
+
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="title">Title</label>
+        <input
+          placeholder="Title"
+          name="title"
+          value={form.title}
+          onChange={handleChange}
+          style={{ display: "block", marginBottom: "10px" }}
+        />
+
+        <label htmlFor="amount">Amount</label>
+        <input
+          placeholder="Amount"
+          type="number"
+          name="amount"
+          value={form.amount}
+          onChange={handleChange}
+          style={{ display: "block", marginBottom: "10px" }}
+        />
+        {/* /* Date auto readonly */ }
+        <label htmlFor="date">Date  (Auto) </label>
+        <input
+          type="date"
+          name="date"
+          value={form.date}
+          onChange={handleChange}
+          style={{ display: "block", marginBottom: "10px" }}
+          readOnly
+        />
+        {/* Category */ }
+        <label htmlFor="category">Category</label>
+        <select
+          name="category"
+          value={form.category}
+          onChange={handleChange}
+          style={{ display: "block", marginBottom: "10px" }}
+        >
+          <option value="">Select Category</option>
+          <option value="Food">Food</option>
+          <option value="General">General</option>
+          <option value="Utilities">Utilities</option>
+          <option value="Entertainment">Entertainment</option>
+          <option value="Travel">Travel</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <button type="submit" style={{ marginTop: 12}}>Add Expense</button>
+      </form>
+      <Link  style={{ marginTop: 12, padding: 20}} href="/">← Back</Link>
+    </div>
+  );
+}
+
+export default AddExpense;
