@@ -93,7 +93,7 @@ export default function MyExpensesPage() {
         setError(res?.message || res?.error || "Failed to delete expense");
       }
     } catch (err) {
-      console.error("Failed to delete expense:", err);
+      Alert.error("Failed to delete expense:", err);
       // rollback on network error
       setExpenses(previous);
       setError("Failed to delete expense");
