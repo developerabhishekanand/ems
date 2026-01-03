@@ -1,5 +1,5 @@
 // Removed stray Markdown fences and fixed formatting
-export const API_URL = "https://ems-backend-liart.vercel.app/api/api";
+export const API_URL = "https://ems-backend-liart.vercel.app/api";
 const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000";
 
 export async function apiFetch(path, options = {}) {

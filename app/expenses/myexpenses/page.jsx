@@ -53,7 +53,7 @@ export default function MyExpensesPage() {
           else setError(res?.message || "No expenses found");
         }
       } catch (err) {
-        console.error("Error loading my expenses:", err);
+        alert.error("Error loading my expenses:", err);
         setError("Failed to fetch expenses");
       } finally {
         setLoading(false);
