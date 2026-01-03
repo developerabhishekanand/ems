@@ -1,5 +1,5 @@
 // Removed stray Markdown fences and fixed formatting
-export const API_URL = "https://ems-backend-liart.vercel.app/api";
+export const API_URL = "https://ems-backend-liart.vercel.app";
 const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000";
 
 export async function apiFetch(path, options = {}) {
@@ -10,7 +10,7 @@ export async function apiFetch(path, options = {}) {
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
     ...(options.headers || {}),
   };
-  const res = await fetch(`${BACKEND}${path}`, { ...options, headers });
+  const res = await fetch(`${API_URL}${path}`, { ...options, headers });
   if (res.status === 401) {
     // token invalid/expired - clear and redirect on client
     if (typeof window !== "undefined") {
