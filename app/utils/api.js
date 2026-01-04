@@ -62,7 +62,7 @@ export async function addExpense(data) {
     const body = await res.json();
     return { status: res.status, ok: res.ok, ...body };
   } catch (error) {
-    console.error("addExpense error:", error);
+    console.log("addExpense error:", error);
     return { ok: false, message: "Network or server error" };
   }
 }

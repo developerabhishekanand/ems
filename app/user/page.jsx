@@ -15,7 +15,7 @@ export default function Users() {
         const res = await fetchUsers()
         if (!cancelled) setUsers(Array.isArray(res) ? res : [])
       } catch (err) {
-        console.error('Failed to fetch users', err)
+        console.log('Failed to fetch users', err)
         if (!cancelled) setError('Failed to load users')
       }
     }

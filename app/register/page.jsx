@@ -28,10 +28,10 @@ const Register = () => {
                 router.push('/login');
             } else {
                 alert(res.message || 'Registration failed');
-                console.error('Registration failed:', res.message);
+                console.log('Registration failed:', res.message);
             }
         } catch (error) {
-            console.error('An error occurred:', error);
+            console.log('An error occurred:', error);
         }
     }   
   return (

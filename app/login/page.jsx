@@ -34,7 +34,7 @@ const Login = () => {
           }
         } catch (error) {
             alert('Login error');
-            console.error('Login error:', error);
+            console.log('Login error:', error);
         }
     }
   return (

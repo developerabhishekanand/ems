@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { addExpense,fetchMyExpenses } from "../../utils/api";   
-import { error } from "console";
 
 const MyExpenses= () => {
     const [expenses, setExpenses] = useState([]);
@@ -22,15 +21,15 @@ const MyExpenses= () => {
                         setExpenses(res|| []);
                     }
                     else {
-                        console.error("MyExpenses error: format:", res);
+                        console.log("MyExpenses error: format:", res);
                     }                        
                  })
                  .catch(error => {
-                    console.error("MyExpenses fetch error:", error);    
+                    console.log("MyExpenses fetch error:", error);    
                  });
             } 
             catch (error) {
-                console.error("Error fetching expenses:", error);
+                console.log("Error fetching expenses:", error);
             }
         }
     }, []);

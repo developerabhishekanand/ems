@@ -91,11 +91,11 @@ const handleSubmit = async (e) => {
   //       category: ''
   //     });
   //   } else {
-  //     console.error('Add expense failed:', res);
+  //     console.log('Add expense failed:', res);
   //     alert(res?.message || 'Failed to add expense');
   //   }
   // } catch (error) {
-  //   console.error("An error occurred:", error);
+  //   console.log("An error occurred:", error);
   //   alert('An error occurred while adding expense');
   // }
   //   // window.location.href = "/expenses"; // navigate to list
