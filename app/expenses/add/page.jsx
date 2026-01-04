@@ -34,44 +34,72 @@ export const AddExpense= () => {
     }));
   }
 
+const handleSubmit = async (e) => {
+  e.preventDefault(); // 🔑 prevents page reload
+  const token = localStorage.getItem("token");
+  alert("Form Data: " + JSON.stringify(form));
+  alert("Token: " + token);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  if (!token) return alert("Please login!");
+  // Ensure amount is a number
+  const expenseData = {
+    ...form,
+    amount: parseFloat(form.amount), // convert string to number
+    category: form.category || "General",
+  };
 
-    try {
-      const token = localStorage.getItem("token");
+  const res = await addExpense(expenseData);
 
-      if (!token) {
-        alert("Please login first!");
-        return;
-      } 
+  if (res.ok) {
+    alert("Expense added!");
+    setForm({
+      title: "",
+      amount: "",
+      category: "",
+      date: new Date().toISOString().split("T")[0],
+    });
+  } else {
+    alert(res.message || "Failed to add expense");
+  }
+};
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     const token = localStorage.getItem("token");
+
+  //     if (!token) {
+  //       alert("Please login first!");
+  //       return;
+  //     } 
 
        
-    const res = await addExpense({
-      title: form.title,
-      amount: form.amount,
-      category: form.category || "General",
-      date: form.date,
-    });
+  //   const res = await addExpense({
+  //     title: form.title,
+  //     amount: form.amount,
+  //     category: form.category || "General",
+  //     date: form.date,
+  //   });
 
-    if (res && res.status >= 200 && res.status < 300) {
-      alert("Expense added successfully!");
-      setForm({
-        title: '',
-        amount: '',
-        date: new Date().toISOString().split('T')[0],
-        category: ''
-      });
-    } else {
-      console.error('Add expense failed:', res);
-      alert(res?.message || 'Failed to add expense');
-    }
-  } catch (error) {
-    console.error("An error occurred:", error);
-    alert('An error occurred while adding expense');
-  }
-    // window.location.href = "/expenses"; // navigate to list
-  };
+  //   if (res && res.status >= 200 && res.status < 300) {
+  //     alert("Expense added successfully!");
+  //     setForm({
+  //       title: '',
+  //       amount: '',
+  //       date: new Date().toISOString().split('T')[0],
+  //       category: ''
+  //     });
+  //   } else {
+  //     console.error('Add expense failed:', res);
+  //     alert(res?.message || 'Failed to add expense');
+  //   }
+  // } catch (error) {
+  //   console.error("An error occurred:", error);
+  //   alert('An error occurred while adding expense');
+  // }
+  //   // window.location.href = "/expenses"; // navigate to list
+  // };
 
   return (
     <div style={{ maxWidth: 420, margin: "40px auto", padding: 20 }}>
@@ -102,7 +130,6 @@ export const AddExpense= () => {
           type="date"
           name="date"
           value={form.date}
-          onChange={handleChange}
           style={{ display: "block", marginBottom: "10px" }}
           readOnly
         />

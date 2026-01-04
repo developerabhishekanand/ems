@@ -1,6 +1,5 @@
 // Removed stray Markdown fences and fixed formatting
 export const API_URL = "https://ems-backend-liart.vercel.app";
-const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000";
 
 export async function apiFetch(path, options = {}) {
   const token =
@@ -44,18 +43,28 @@ export async function fetchMyExpenses(token) {
 }
 
 export async function addExpense(data) {
-  const token =
-    typeof window !== "undefined" ? localStorage.getItem("token") : null;
-  const response = await fetch(`${API_URL}/expenses/add`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    },
-    body: JSON.stringify(data),
-  });
-  const body = await response.json();
-  return { status: response.status, ok: response.ok, ...body };
+  if (typeof window === "undefined")
+    return { ok: false, message: "Cannot run on server" };
+
+  const token = localStorage.getItem("token");
+  if (!token) return { ok: false, message: "No token found" };
+
+  try {
+    const res = await fetch(`${API_URL}/expenses/add`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    });
+
+    const body = await res.json();
+    return { status: res.status, ok: res.ok, ...body };
+  } catch (error) {
+    console.error("addExpense error:", error);
+    return { ok: false, message: "Network or server error" };
+  }
 }
 
 export async function login(data) {
