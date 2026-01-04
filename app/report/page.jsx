@@ -1,10 +1,10 @@
 import React from 'react'
 import { fetchExpenses } from "../utils/api";
 
-export default async function ReportPage() {
+export default function ReportPage() {
   // fetch all expenses (server-side)
-  const expenses = await fetchExpenses();
-  
+  const expenses = fetchExpenses();
+
   // group expenses by user_id
   const groups = Object.values(
     expenses.reduce((acc, e) => {

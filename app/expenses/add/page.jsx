@@ -15,8 +15,6 @@ export const AddExpense= () => {
 
     });
 
-  // populate date on client mount to avoid rendering different values between
-  // server and client initial render (prevents hydration mismatches)
   useEffect(() => {
     // Defer setState to avoid a synchronous state update within the effect
     const id = setTimeout(() => {
