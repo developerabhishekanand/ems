@@ -1,5 +1,5 @@
 // Removed stray Markdown fences and fixed formatting
-export const API_URL = "https://ems-backend-liart.vercel.app";
+export const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export async function apiFetch(path, options = {}) {
   const token =
