@@ -1,10 +1,8 @@
 import React from 'react'
-import Link from 'next/link';
-import { fetchExpenses } from '../utils/api.js';
 
 export default async function ReportPage() {
   // fetch all expenses (server-side)
-  const res = await fetch();
+  const res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/expenses/all', { cache: 'no-store' });
   const data = await res.json();
   const expenses = Array.isArray(data) ? data : [];
 
