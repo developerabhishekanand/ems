@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { addExpense } from "../../utils/api";
+import { addExpense } from "../../utils/api.js";
 import Link from "next/link";
 
 

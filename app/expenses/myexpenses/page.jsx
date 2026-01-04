@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { fetchMyExpenses, deleteExpense } from "@/app/utils/api";
+import { fetchMyExpenses, deleteExpense } from "../../utils/api.js";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
