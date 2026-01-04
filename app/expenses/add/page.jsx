@@ -63,44 +63,6 @@ const handleSubmit = async (e) => {
   }
 };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     const token = localStorage.getItem("token");
-
-  //     if (!token) {
-  //       alert("Please login first!");
-  //       return;
-  //     } 
-
-       
-  //   const res = await addExpense({
-  //     title: form.title,
-  //     amount: form.amount,
-  //     category: form.category || "General",
-  //     date: form.date,
-  //   });
-
-  //   if (res && res.status >= 200 && res.status < 300) {
-  //     alert("Expense added successfully!");
-  //     setForm({
-  //       title: '',
-  //       amount: '',
-  //       date: new Date().toISOString().split('T')[0],
-  //       category: ''
-  //     });
-  //   } else {
-  //     console.log('Add expense failed:', res);
-  //     alert(res?.message || 'Failed to add expense');
-  //   }
-  // } catch (error) {
-  //   console.log("An error occurred:", error);
-  //   alert('An error occurred while adding expense');
-  // }
-  //   // window.location.href = "/expenses"; // navigate to list
-  // };
-
   return (
     <div style={{ maxWidth: 420, margin: "40px auto", padding: 20 }}>
       <h1>Add Expense</h1>

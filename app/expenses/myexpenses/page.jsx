@@ -117,7 +117,7 @@ export default function MyExpensesPage() {
           <small>{e.date} | {e.category}</small>
         </div>
       ))}
-      <Link href="/">← Back</Link>
+      <Link  style={{ marginTop: 12, padding: 20}} href="/">← Back</Link>
     </div>
   );
 }

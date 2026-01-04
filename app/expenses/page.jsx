@@ -1,4 +1,5 @@
 import { fetchExpenses } from "../utils/api";
+import Link from "next/link";
 
 export default async function ExpensesPage() {
   const expenses = await fetchExpenses();
@@ -33,6 +34,7 @@ export default async function ExpensesPage() {
             Total: ₹{total.toFixed(2)}
           </div>
         )}
+        <Link  style={{ marginTop: 12, padding: 20}} href="/">← Back</Link>
       </div>
     </div>
   );
