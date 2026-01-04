@@ -42,10 +42,7 @@ export async function fetchMyExpenses(token) {
   return { status: response.status, ok: response.ok, ...body };
 }
 
-export async function addExpense(data) {
-  if (typeof window === "undefined")
-    return { ok: false, message: "Cannot run on server" };
-
+export async function addExpense(expense) {
   const token = localStorage.getItem("token");
   if (!token) return { ok: false, message: "No token found" };
 
@@ -56,11 +53,18 @@ export async function addExpense(data) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        ...expense,
+      }),
     });
 
-    const body = await res.json();
-    return { status: res.status, ok: res.ok, ...body };
+    const data = await res.json();
+    return {
+      ok: res.ok,
+      status: res.status,
+      message: data?.message,
+      data,
+    };
   } catch (error) {
     console.log("addExpense error:", error);
     return { ok: false, message: "Network or server error" };

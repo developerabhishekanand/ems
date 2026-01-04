@@ -1,18 +1,27 @@
 import React from 'react'
 import { fetchExpenses } from "../utils/api";
 
-export default function ReportPage() {
+export default async function ReportPage() {
   // fetch all expenses (server-side)
-  const expenses = fetchExpenses();
+  const expenses = await fetchExpenses();
 
+  if (!Array.isArray(expenses)) {
+    return <p>No expenses found</p>;
+  }
   // group expenses by user_id
   const groups = Object.values(
     expenses.reduce((acc, e) => {
-      const uid = e.user_id ?? 'unknown';
+      const uid = e.user_id ?? "unknown";
       if (!acc[uid]) {
-        acc[uid] = { user_id: uid, name: e.name || 'Unknown', email: e.email || '', expenses: [], total: 0 };
+        acc[uid] = {
+          user_id: uid,
+          name: e.name || "Unknown",
+          email: e.email || "",
+          expenses: [],
+          total: 0,
+        };
       }
-      const amt = parseFloat(e.amount) || 0;
+       const amt = Number(e.amount) || 0;
       acc[uid].expenses.push(e);
       acc[uid].total += amt;
       return acc;
