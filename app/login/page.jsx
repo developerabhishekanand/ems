@@ -27,7 +27,7 @@ const Login = () => {
               // notify other components in this tab
               window.dispatchEvent(new CustomEvent('user-changed', { detail: { user: data.user } }));
             }
-            router.push('/expenses');
+            router.push('/');
           } else {
             alert('Login failed');
           }
