@@ -35,8 +35,6 @@ export const AddExpense= () => {
 const handleSubmit = async (e) => {
   e.preventDefault(); // 🔑 prevents page reload
   const token = localStorage.getItem("token");
-  alert("Form Data: " + JSON.stringify(form));
-  alert("Token: " + token);
 
   if (!token) return alert("Please login!");
   // Ensure amount is a number
