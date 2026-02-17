@@ -28,13 +28,11 @@ const Login = () => {
               window.dispatchEvent(new CustomEvent('user-changed', { detail: { user: data.user } }));
             }
             router.push('/expenses');
-            alert('Login successful');
           } else {
             alert('Login failed');
           }
         } catch (error) {
-            alert('Login error');
-            console.log('Login error:', error);
+            alert('Login error: ' + error.message);
         }
     }
   return (

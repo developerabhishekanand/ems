@@ -22,13 +22,11 @@ const Register = () => {
         
         try {  
             const res = await register(form);
-            console.log('Registration response:', res);
             if (res.status === 201) {
                 alert(res.message || 'User registered successfully');
                 router.push('/login');
             } else {
                 alert(res.message || 'Registration failed');
-                console.log('Registration failed:', res.message);
             }
         } catch (error) {
             console.log('An error occurred:', error);
